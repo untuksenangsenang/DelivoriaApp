@@ -5,45 +5,50 @@ class MyDescriptionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // text styles
-    var myPrimaryTextStyle = TextStyle(
-      color: Theme.of(context).colorScheme.inversePrimary,
-      fontWeight: FontWeight.bold, // Menambah kejelasan pada teks utama
+    final myPrimaryTextStyle = TextStyle(
+      color: Theme.of(context).colorScheme.onBackground,
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
     );
 
-    var mySecondaryTextStyle = TextStyle(
+    final mySecondaryTextStyle = TextStyle(
       color: Theme.of(context).colorScheme.primary,
-      fontSize: 12, // Ukuran font lebih kecil untuk teks sekunder
+      fontSize: 12,
     );
 
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Theme.of(context).colorScheme.secondary),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
       ),
-      padding: const EdgeInsets.all(15), // Mengurangi padding untuk ruang yang lebih hemat
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center, // Memastikan vertikal alignment
         children: [
-          // delivery fee
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri untuk teks
-            children: [
-              Text('\$0.99', style: myPrimaryTextStyle),
-              Text('Delivery Fee', style: mySecondaryTextStyle),
-            ],
+          // Delivery Fee
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('\$0.99', style: myPrimaryTextStyle),
+                const SizedBox(height: 4),
+                Text('Delivery Fee', style: mySecondaryTextStyle),
+              ],
+            ),
           ),
-          // delivery time
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri untuk teks
-            children: [
-              Text('15-30 min', style: myPrimaryTextStyle),
-              Text('Delivery time', style: mySecondaryTextStyle),
-            ],
+
+          // Delivery Time
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('15–30 min', style: myPrimaryTextStyle),
+                const SizedBox(height: 4),
+                Text('Delivery time', style: mySecondaryTextStyle),
+              ],
+            ),
           ),
         ],
       ),

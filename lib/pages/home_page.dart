@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       
       return ListView.builder(
         itemCount: categoryMenu.length,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(categoryMenu[index].name),

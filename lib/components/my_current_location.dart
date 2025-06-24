@@ -3,27 +3,22 @@ import 'package:flutter/material.dart';
 class MyCurrentLocation extends StatelessWidget {
   const MyCurrentLocation({super.key});
 
-  // Fungsi untuk membuka kotak pencarian lokasi (placeholder)
   void openLocationSearchBox(BuildContext context) {
-    // Implementasikan logika untuk membuka dialog atau halaman pencarian lokasi
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Your Location"),
         content: const TextField(
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: "Search for a location",
           ),
         ),
         actions: [
-          //cancel button
-          MaterialButton(
+          TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
           ),
-
-          //save button
-          MaterialButton(
+          TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('Save'),
           ),
@@ -35,31 +30,39 @@ class MyCurrentLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: const EdgeInsets.only(top: 60, left: 16, right: 16, bottom: 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+        crossAxisAlignment: CrossAxisAlignment.start, // Biar alamat rata kiri
         children: [
+          const SizedBox(height: 40), // Tambahan jarak besar dari atas header
+
           Text(
             "Delivery Now",
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
+              fontSize: 12,
             ),
           ),
+
+          const SizedBox(height: 4),
+
           GestureDetector(
             onTap: () => openLocationSearchBox(context),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi
+              mainAxisSize: MainAxisSize.min,
               children: [
-                // address
-                Text(
-                  "6901 Giwangan Barat, Yogyakarta, Indonesia",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Text(
+                    "6901 Giwangan Barat, Yogyakarta, Indonesia",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                // drop down menu indicator
-                Icon(Icons.keyboard_arrow_down_rounded),
+                const SizedBox(width: 4),
+                const Icon(Icons.keyboard_arrow_down_rounded),
               ],
             ),
           ),
