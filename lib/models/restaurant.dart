@@ -125,7 +125,7 @@ class Restaurant extends ChangeNotifier {
      Food(
       name: "Loaded Fries",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loaded_fries.png",
+      imagePath: "lib/images/sides/loadedfries_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -135,7 +135,7 @@ class Restaurant extends ChangeNotifier {
      Food(
       name: "Loaded Fries",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loaded_fries.png",
+      imagePath: "lib/images/sides/loadedfries_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -145,7 +145,7 @@ class Restaurant extends ChangeNotifier {
      Food(
       name: "Loaded Fries",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loaded_fries.png",
+      imagePath: "lib/images/sides/loadedfries_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -155,7 +155,7 @@ class Restaurant extends ChangeNotifier {
      Food(
       name: "Loaded Fries",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loaded_fries.png",
+      imagePath: "lib/images/sides/loadedfries_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -165,7 +165,7 @@ class Restaurant extends ChangeNotifier {
      Food(
       name: "Loaded Fries",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loaded_fries.png",
+      imagePath: "lib/images/sides/loadedfries_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [

@@ -22,7 +22,6 @@ enum FoodCategory {
   burgers,
   salads,
   sides,
-  desserts,
   drinks,
 }
 

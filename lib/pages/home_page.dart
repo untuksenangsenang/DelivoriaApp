@@ -1,6 +1,7 @@
 import 'package:delivoria/components/my_current_location.dart';
 import 'package:delivoria/components/my_description_box.dart';
 import 'package:delivoria/components/my_drawer.dart';
+import 'package:delivoria/components/my_food_tile.dart';
 import 'package:delivoria/components/my_silver_app_bar.dart';
 import 'package:delivoria/components/my_tab_bar.dart';
 import 'package:delivoria/models/food.dart';
@@ -40,15 +41,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   //return list of foods in given category
   List<Widget> getFoodsInThisCategory(List<Food> fullMenu) {
     return FoodCategory.values.map((category) {
+
+      //get category menu
       List<Food> categoryMenu = _filterFoodsByCategory(category, fullMenu);
       
       return ListView.builder(
         itemCount: categoryMenu.length,
         physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(categoryMenu[index].name),
-          );
+
+          //get individual food
+          final food = categoryMenu[index];
+
+          //return food tile UI
+          return FoodTile(food: food, onTap: () {});
         },
         );
     }).toList();
