@@ -1,3 +1,4 @@
+import 'package:delivoria/models/food.dart';
 import 'package:flutter/material.dart';
 
 class MyTabBar extends StatelessWidget {
@@ -8,27 +9,21 @@ class MyTabBar extends StatelessWidget {
     required this.tabController,
   });
 
-  @override
+// Example method for building category tabs (currently unused)
+List<Tab> _buildCategoryTabs(List<String> categories) {
+  return FoodCategory.values.map((category) {
+    return Tab(
+      text: category.toString().split('.').last,
+    );
+  }).toList();
+}
+
+@override
   Widget build(BuildContext context) {
     return Container(
       child: TabBar(
         controller: tabController,
-        tabs: [
-          //1st tab
-          Tab(
-            icon: Icon(
-              Icons.home
-            ),
-          ),
-          //2nd tab
-           Tab(
-              icon: Icon(Icons.settings),
-              ),
-          //3rd tab
-           Tab(
-              icon: Icon(Icons.person),
-              ),
-        ],
+        tabs: _buildCategoryTabs(FoodCategory.values.map((category) => category.toString().split('.').last).toList()),
       ),
     );
   }
