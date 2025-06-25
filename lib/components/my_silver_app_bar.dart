@@ -1,3 +1,4 @@
+import 'package:delivoria/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 
 class MySilverAppBar extends StatelessWidget {
@@ -20,9 +21,14 @@ class MySilverAppBar extends StatelessWidget {
       actions: [
         // cart button
         IconButton(
-          onPressed: () {}, // Fungsi kosong atau ganti dengan logika yang diinginkan
+          onPressed: () {
+            //go to cart page 
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => const CartPage(),)
+              );
+          }, // Fungsi kosong atau ganti dengan logika yang diinginkan
           icon: Icon(
-            Icons.shopping_cart,
+            Icons.shopping_cart_outlined,
           ),
         ),
       ],

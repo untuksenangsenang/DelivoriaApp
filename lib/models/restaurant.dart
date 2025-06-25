@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+import 'package:delivoria/models/cart_item.dart';
 import 'package:flutter/material.dart';
 
 import 'food.dart';
@@ -18,9 +20,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Classic Cheeseburger",
+      name: "Aloha Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/cheeseBurger.jpg",
+      imagePath: "lib/images/burgers/alohaBurger.jpg",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -30,9 +32,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Classic Cheeseburger",
+      name: "BBQ Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/cheeseBurger.jpg",
+      imagePath: "lib/images/burgers/bbqBurger.jpg",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -42,9 +44,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Classic Cheeseburger",
+      name: "Bluemoon Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/cheeseBurger.jpg",
+      imagePath: "lib/images/burgers/bluemoonBurger.jpg",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -54,9 +56,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Classic Cheeseburger",
+      name: "Vege Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/cheeseBurger.jpg",
+      imagePath: "lib/images/burgers/vegeBurger.jpg",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -78,9 +80,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Caesar Salad",
+      name: "Greek Salad",
       description: "Crisp romaine lettuce with Caesar dressing and croutons",
-      imagePath: "lib/images/salads/caesar_salad.png",
+      imagePath: "lib/images/salads/greek_salad.png",
       price: 1.20,
       category: FoodCategory.salads,
       availableAddons: [
@@ -89,9 +91,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Caesar Salad",
+      name: "Asian Salad",
       description: "Crisp romaine lettuce with Caesar dressing and croutons",
-      imagePath: "lib/images/salads/caesar_salad.png",
+      imagePath: "lib/images/salads/asian_sesame_salad.png",
       price: 1.20,
       category: FoodCategory.salads,
       availableAddons: [
@@ -100,9 +102,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Caesar Salad",
+      name: "Quinoa Salad",
       description: "Crisp romaine lettuce with Caesar dressing and croutons",
-      imagePath: "lib/images/salads/caesar_salad.png",
+      imagePath: "lib/images/salads/quinoa_salad.png",
       price: 1.20,
       category: FoodCategory.salads,
       availableAddons: [
@@ -111,9 +113,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
     Food(
-      name: "Caesar Salad",
+      name: "Southwest Salad",
       description: "Crisp romaine lettuce with Caesar dressing and croutons",
-      imagePath: "lib/images/salads/caesar_salad.png",
+      imagePath: "lib/images/salads/southwest_salad.png",
       price: 1.20,
       category: FoodCategory.salads,
       availableAddons: [
@@ -133,9 +135,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Loaded Fries",
+      name: "Garlic Bread Side",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loadedfries_side.png",
+      imagePath: "lib/images/sides/garlic_bread_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -143,9 +145,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Loaded Fries",
+      name: "Mac Side",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loadedfries_side.png",
+      imagePath: "lib/images/sides/mac_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -153,9 +155,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Loaded Fries",
+      name: "Onion Rings",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loadedfries_side.png",
+      imagePath: "lib/images/sides/onion_rings_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -163,9 +165,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Loaded Fries",
+      name: "Sweet Potato",
       description: "Golden crispy fries",
-      imagePath: "lib/images/sides/loadedfries_side.png",
+      imagePath: "lib/images/sides/sweet_potato_side.png",
       price: 0.80,
       category: FoodCategory.sides,
       availableAddons: [
@@ -174,7 +176,7 @@ class Restaurant extends ChangeNotifier {
     ),
     // Drinks
     Food(
-      name: "Amercano Coffee",
+      name: "Americano Coffee",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
       imagePath: "lib/images/drinks/americano.png",
       price: 0.60,
@@ -185,9 +187,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Amercano Coffee",
+      name: "Lychee Tea",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
-      imagePath: "lib/images/drinks/americano.png",
+      imagePath: "lib/images/drinks/lyche_tea.png",
       price: 0.60,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -196,9 +198,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Amercano Coffee",
+      name: "Matcha",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
-      imagePath: "lib/images/drinks/americano.png",
+      imagePath: "lib/images/drinks/matcha.png",
       price: 0.60,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -207,9 +209,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
      Food(
-      name: "Amercano Coffee",
+      name: "Pink Mojito",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
-      imagePath: "lib/images/drinks/americano.png",
+      imagePath: "lib/images/drinks/pink_mojito.png",
       price: 0.60,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -218,9 +220,9 @@ class Restaurant extends ChangeNotifier {
       ],
     ), 
     Food(
-      name: "Amercano Coffee",
+      name: "Vanilla Latte",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
-      imagePath: "lib/images/drinks/americano.png",
+      imagePath: "lib/images/drinks/vanilla_latte.png",
       price: 0.60,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -237,6 +239,7 @@ class Restaurant extends ChangeNotifier {
   */
 
   List<Food> get menu => _menu;
+  List<CartItem> get cart => _cart;
 
   /*
 
@@ -244,15 +247,87 @@ class Restaurant extends ChangeNotifier {
 
   */
 
+  //user cart
+  final List<CartItem> _cart = [];
+
   //add to cart
+  void addToCart(Food food, List<Addon> selectedAddons) {
+    //see if there is a cart item with the same food and selected addons
+    CartItem? cartItem = _cart.firstWhereOrNull((item) {
+      //check id the same food items are the same
+      bool isSameFood = item.food == food;
+
+      //check if the list of selected addons are the same
+      bool isSameAddons = 
+      ListEquality().equals(item.selectedAddons, selectedAddons);
+
+      return isSameFood && isSameAddons;
+    });
+
+    if (cartItem != null) {
+      cartItem.quantity++;
+    }
+
+    //otherwise, add a new cart item to the cart
+    else {
+      _cart.add(
+        CartItem(
+          food: food,
+          selectedAddons: selectedAddons,
+        ),
+      );
+      notifyListeners();
+    }
+  }
 
   //remove from cart
+  void removeFromCart(CartItem cartItem){
+    int cartIndex = _cart.indexOf(cartItem);
+
+    if (cartIndex != -1) {
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
+      }else {
+        _cart.removeAt(cartIndex);
+      }
+    }
+
+    notifyListeners();
+  }
 
   //get total price of cart
+  double getTotalPrice(){
+    double total = 0.0;
+    
+    for  (CartItem cartItem in _cart) {
+      double itemTotal = cartItem.food.price;
+
+      for (Addon addon in cartItem.selectedAddons) {
+        itemTotal += addon.price;
+      }
+
+      total  += itemTotal * cartItem.quantity;
+    }
+
+    return total;
+  }
 
   //get total items in cart
+  int getTotalItemCount() {
+    int totalItemCount = 0;
+
+    for (CartItem cartItem in _cart) {
+      totalItemCount += cartItem.quantity;
+    }
+
+    return totalItemCount;
+  }
 
   //clear cart
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+    }
 
 
   /*
