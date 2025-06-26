@@ -10,7 +10,7 @@ class Restaurant extends ChangeNotifier {
     Food(
       name: "Classic Cheeseburger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/cheeseBurger.jpg",
+      imagePath: "lib/images/burgers/cheeseBurger.png",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -22,7 +22,7 @@ class Restaurant extends ChangeNotifier {
     Food(
       name: "Aloha Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/alohaBurger.jpg",
+      imagePath: "lib/images/burgers/alohaBurger.png",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -34,7 +34,7 @@ class Restaurant extends ChangeNotifier {
     Food(
       name: "BBQ Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/bbqBurger.jpg",
+      imagePath: "lib/images/burgers/bbqBurger.png",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -46,7 +46,7 @@ class Restaurant extends ChangeNotifier {
     Food(
       name: "Bluemoon Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/bluemoonBurger.jpg",
+      imagePath: "lib/images/burgers/bluemoonBurger.png",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -58,7 +58,7 @@ class Restaurant extends ChangeNotifier {
     Food(
       name: "Vege Burger",
       description: "A juicy beef patty with melted cheese, lettuce, tomato, and our special sauce",
-      imagePath: "lib/images/burgers/vegeBurger.jpg",
+      imagePath: "lib/images/burgers/vegeBurger.png",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [

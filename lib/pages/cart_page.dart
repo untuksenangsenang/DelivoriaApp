@@ -1,7 +1,8 @@
-import 'package:delivoria/models/cart_item.dart';
 import 'package:delivoria/models/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:delivoria/components/my_cart_tile.dart';
+
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -29,9 +30,7 @@ class CartPage extends StatelessWidget {
                     final cartItem = userCart[index];
 
                     //return cart tile ui
-                    return ListTile(
-                      title: Text(cartItem.food.name),
-                    );
+                    return MyCartTile(cartItem: cartItem);
                   }))
             ],
           ),
