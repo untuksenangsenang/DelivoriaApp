@@ -1,8 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:delivoria/models/cart_item.dart';
 import 'package:flutter/material.dart';
-
 import 'food.dart';
+import 'cart_item.dart';
 
 class Restaurant extends ChangeNotifier {
   final List<Food> _menu = [
@@ -67,6 +66,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Avocado", price: 1.00),
       ],
     ),
+
     // Salads
     Food(
       name: "Caesar Salad",
@@ -123,8 +123,9 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Parmesan", price: 0.60),
       ],
     ),
+
     // Sides
-     Food(
+    Food(
       name: "Loaded Fries",
       description: "Golden crispy fries",
       imagePath: "lib/images/sides/loadedfries_side.png",
@@ -134,7 +135,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Cheese Sauce", price: 0.40),
       ],
     ),
-     Food(
+    Food(
       name: "Garlic Bread Side",
       description: "Golden crispy fries",
       imagePath: "lib/images/sides/garlic_bread_side.png",
@@ -144,7 +145,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Cheese Sauce", price: 0.40),
       ],
     ),
-     Food(
+    Food(
       name: "Mac Side",
       description: "Golden crispy fries",
       imagePath: "lib/images/sides/mac_side.png",
@@ -154,7 +155,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Cheese Sauce", price: 0.40),
       ],
     ),
-     Food(
+    Food(
       name: "Onion Rings",
       description: "Golden crispy fries",
       imagePath: "lib/images/sides/onion_rings_side.png",
@@ -164,7 +165,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Cheese Sauce", price: 0.40),
       ],
     ),
-     Food(
+    Food(
       name: "Sweet Potato",
       description: "Golden crispy fries",
       imagePath: "lib/images/sides/sweet_potato_side.png",
@@ -174,6 +175,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Cheese Sauce", price: 0.40),
       ],
     ),
+
     // Drinks
     Food(
       name: "Americano Coffee",
@@ -186,7 +188,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Extra Shot", price: 0.50),
       ],
     ),
-     Food(
+    Food(
       name: "Lychee Tea",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
       imagePath: "lib/images/drinks/lyche_tea.png",
@@ -197,7 +199,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Extra Shot", price: 0.50),
       ],
     ),
-     Food(
+    Food(
       name: "Matcha",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
       imagePath: "lib/images/drinks/matcha.png",
@@ -208,7 +210,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Extra Shot", price: 0.50),
       ],
     ),
-     Food(
+    Food(
       name: "Pink Mojito",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
       imagePath: "lib/images/drinks/pink_mojito.png",
@@ -218,7 +220,7 @@ class Restaurant extends ChangeNotifier {
         Addon(name: "Ice", price: 0.10),
         Addon(name: "Extra Shot", price: 0.50),
       ],
-    ), 
+    ),
     Food(
       name: "Vanilla Latte",
       description: "A rich and bold Americano coffee made with freshly brewed espresso and hot water",
@@ -232,114 +234,62 @@ class Restaurant extends ChangeNotifier {
     ),
   ];
 
-  /*
-
-  G E T T E R S
-
-  */
+  final List<CartItem> _cart = [];
 
   List<Food> get menu => _menu;
   List<CartItem> get cart => _cart;
 
-  /*
-
-  O P E R A T I O N S
-
-  */
-
-  //user cart
-  final List<CartItem> _cart = [];
-
-  //add to cart
   void addToCart(Food food, List<Addon> selectedAddons) {
-    //see if there is a cart item with the same food and selected addons
     CartItem? cartItem = _cart.firstWhereOrNull((item) {
-      //check id the same food items are the same
       bool isSameFood = item.food == food;
-
-      //check if the list of selected addons are the same
-      bool isSameAddons = 
-      ListEquality().equals(item.selectedAddons, selectedAddons);
-
+      bool isSameAddons = ListEquality().equals(item.selectedAddons, selectedAddons);
       return isSameFood && isSameAddons;
     });
 
     if (cartItem != null) {
       cartItem.quantity++;
+    } else {
+      _cart.add(CartItem(food: food, selectedAddons: selectedAddons));
     }
 
-    //otherwise, add a new cart item to the cart
-    else {
-      _cart.add(
-        CartItem(
-          food: food,
-          selectedAddons: selectedAddons,
-        ),
-      );
-      notifyListeners();
-    }
+    notifyListeners(); // <- selalu panggil di semua kondisi
   }
 
-  //remove from cart
-  void removeFromCart(CartItem cartItem){
-    int cartIndex = _cart.indexOf(cartItem);
+  void removeFromCart(CartItem cartItem) {
+    int index = _cart.indexOf(cartItem);
 
-    if (cartIndex != -1) {
-      if (_cart[cartIndex].quantity > 1) {
-        _cart[cartIndex].quantity--;
-      }else {
-        _cart.removeAt(cartIndex);
+    if (index != -1) {
+      if (_cart[index].quantity > 1) {
+        _cart[index].quantity--;
+      } else {
+        _cart.removeAt(index);
       }
+      notifyListeners(); // <- panggil hanya jika ada perubahan
     }
-
-    notifyListeners();
   }
 
-  //get total price of cart
-  double getTotalPrice(){
+  double getTotalPrice() {
     double total = 0.0;
-    
-    for  (CartItem cartItem in _cart) {
-      double itemTotal = cartItem.food.price;
-
-      for (Addon addon in cartItem.selectedAddons) {
-        itemTotal += addon.price;
+    for (var cartItem in _cart) {
+      double itemPrice = cartItem.food.price;
+      for (var addon in cartItem.selectedAddons) {
+        itemPrice += addon.price;
       }
-
-      total  += itemTotal * cartItem.quantity;
+      total += itemPrice * cartItem.quantity;
     }
-
     return total;
   }
 
-  //get total items in cart
   int getTotalItemCount() {
-    int totalItemCount = 0;
-
-    for (CartItem cartItem in _cart) {
-      totalItemCount += cartItem.quantity;
+    int count = 0;
+    for (var item in _cart) {
+      count += item.quantity;
     }
-
-    return totalItemCount;
+    return count;
   }
 
-  //clear cart
   void clearCart() {
     _cart.clear();
     notifyListeners();
-    }
-
-
-  /*
-
-  H E L P E R S
-
-  */
-
-  //generate a receipt
-
-  //format double value into 
-
-  //fotmat list of food items into a string
-
+  }
 }
