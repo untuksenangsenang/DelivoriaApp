@@ -2,14 +2,14 @@ import 'package:delivoria/models/food.dart';
 import 'package:flutter/material.dart';
 
 class FoodTile extends StatelessWidget {
-
   final Food food;
   final void Function()? onTap;
 
   const FoodTile({
-    super.key, 
+    super.key,
     required this.food,
-    required this.onTap});
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,40 +18,84 @@ class FoodTile extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                //text food details
-                Expanded(child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              color: Theme.of(context).colorScheme.surface,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(food.name),
-                    Text('\$' + food.price.toString(), style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-
-                    const SizedBox(height: 10),
-
-                    Text(food.description)
+                    // Food image with hero animation
+                    Hero(
+                      tag: food.imagePath,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          food.imagePath,
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    // Text food details
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Food name
+                          Text(
+                            food.name,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          // Food price
+                          Text(
+                            '\$${food.price.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // Food description
+                          Text(
+                            food.description,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                              height: 1.4,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                )),
-
-                const SizedBox(
-                  width: 15,
-                  ),
-
-                  
-                //food image
-                ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(8),
-                  child: Image.asset(food.imagePath, height: 120,)),
-              ],
+                ),
+              ),
             ),
           ),
         ),
-
-        //divider line
-        Divider(color: Theme.of(context).colorScheme.tertiary,
-        endIndent: 25,
-        indent: 25,)
+        // Divider line
+        Divider(
+          color: Theme.of(context).colorScheme.tertiary.withOpacity(0.5),
+          indent: 30,
+          endIndent: 30,
+          height: 1,
+        ),
       ],
     );
   }

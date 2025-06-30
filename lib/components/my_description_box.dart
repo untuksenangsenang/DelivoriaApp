@@ -5,14 +5,16 @@ class MyDescriptionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     final myPrimaryTextStyle = TextStyle(
-      color: Theme.of(context).colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
 
     final mySecondaryTextStyle = TextStyle(
-      color: Theme.of(context).colorScheme.primary,
+      color: colorScheme.primary,
       fontSize: 12,
     );
 
@@ -20,9 +22,9 @@ class MyDescriptionBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.secondary),
+        border: Border.all(color: colorScheme.secondary),
         borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
+        color: colorScheme.surface,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
