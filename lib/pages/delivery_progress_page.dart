@@ -1,21 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:delivoria/components/my_receipt.dart';
+import 'package:delivoria/services/database/firestore.dart';
+import 'package:provider/provider.dart'; // WAJIB jika pakai context.read
+import 'package:delivoria/models/restaurant.dart'; // Pastikan model ini ada
 
-class DeliveryProgressPage extends StatelessWidget {
+class DeliveryProgressPage extends StatefulWidget {
   const DeliveryProgressPage({super.key});
+
+  @override
+  State<DeliveryProgressPage> createState() => _DeliveryProgressPageState();
+}
+
+class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
+  //get access to db
+  FirestoreService db = FirestoreService();
+
+  @override
+  void initState() {
+    super.initState();
+
+    //if we go to this page, submit order to firestore db
+    String receipt = context.read<Restaurant>().displayCartReceipt();
+    db.saveOrderToDatabase(receipt);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Delivery in Progress",
+          "Delivery Progress",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       bottomNavigationBar: _buildBottomNavBar(context),
       body: const SingleChildScrollView(
         child: Padding(

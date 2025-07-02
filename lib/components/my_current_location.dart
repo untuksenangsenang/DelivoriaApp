@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:delivoria/models/restaurant.dart';
 
 class MyCurrentLocation extends StatelessWidget {
   const MyCurrentLocation({super.key});
 
   void openLocationSearchBox(BuildContext context) {
+    final TextEditingController textController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Your Location"),
-        content: const TextField(
-          decoration: InputDecoration(
+        content: TextField(
+          controller: textController,
+          decoration: const InputDecoration(
             hintText: "Search for a location",
           ),
         ),
@@ -19,7 +24,13 @@ class MyCurrentLocation extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              // Update delivery address
+              String newAddress = textController.text;
+              context.read<Restaurant>().updateDeliveryAddress(newAddress);
+              Navigator.pop(context);
+              textController.clear();
+            },
             child: const Text('Save'),
           ),
         ],
@@ -32,9 +43,9 @@ class MyCurrentLocation extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 60, left: 16, right: 16, bottom: 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Biar alamat rata kiri
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40), // Tambahan jarak besar dari atas header
+          const SizedBox(height: 40),
 
           Text(
             "Delivery Now",
@@ -51,9 +62,9 @@ class MyCurrentLocation extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Flexible(
-                  child: Text(
-                    "6901 Giwangan Barat, Yogyakarta, Indonesia",
+                Consumer<Restaurant>(
+                  builder: (context, restaurant, child) => Text(
+                    restaurant.deliveryAddress,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold,

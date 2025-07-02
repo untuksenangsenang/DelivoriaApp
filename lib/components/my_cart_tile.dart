@@ -51,7 +51,7 @@ class MyCartTile extends StatelessWidget {
                   ],
                 ),
 
-                const Spacer(),
+                const SizedBox(height: 10),
               
                 //increment or decrement quantity
                 QuantitySelector(

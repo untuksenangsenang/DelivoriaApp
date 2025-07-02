@@ -1,7 +1,8 @@
 import 'package:delivoria/components/my_button.dart';
 import 'package:delivoria/components/my_textfield.dart';
-import 'package:delivoria/pages/home_page.dart' show HomePage;
 import 'package:flutter/material.dart';
+import 'package:delivoria/auth/auth_service.dart';
+
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -17,15 +18,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   //login method
-  void login() {
-    /*
+  void login() async {
+    //get instance of auth service
+    final _authService = AuthService();
 
-    Here you can implement the login logic, such as validating the email and password,
-    */
+    //try sign in
+    try {
+      await _authService.signInWithEmailPassword(emailController.text, passwordController.text,);
+    }
 
-    //Navigate to the home page or show an error message
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(),),);
-
+    //display any errors
+    catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
+    }
   }
 
   @override
