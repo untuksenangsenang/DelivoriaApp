@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:delivoria/components/my_receipt.dart';
 import 'package:delivoria/services/database/firestore.dart';
-import 'package:provider/provider.dart'; // WAJIB jika pakai context.read
-import 'package:delivoria/models/restaurant.dart'; // Pastikan model ini ada
+import 'package:provider/provider.dart';
+import 'package:delivoria/models/restaurant.dart';
 
 class DeliveryProgressPage extends StatefulWidget {
   const DeliveryProgressPage({super.key});
@@ -12,16 +12,28 @@ class DeliveryProgressPage extends StatefulWidget {
 }
 
 class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
-  //get access to db
-  FirestoreService db = FirestoreService();
+  final FirestoreService db = FirestoreService();
+  bool _isExpanded = false;
+
+  String? latestFoodName;
+  String latestStatus = "paid";
 
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () {
+      final receipt = context.read<Restaurant>().displayCartReceipt();
+      final firstItem = context.read<Restaurant>().cart.isNotEmpty
+          ? context.read<Restaurant>().cart.first.food.name
+          : "Pesanan";
 
-    //if we go to this page, submit order to firestore db
-    String receipt = context.read<Restaurant>().displayCartReceipt();
-    db.saveOrderToDatabase(receipt);
+      db.saveOrderToDatabase(receipt).then((_) {
+        setState(() {
+          latestFoodName = firstItem;
+          latestStatus = "paid";
+        });
+      });
+    });
   }
 
   @override
@@ -36,71 +48,107 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
-      bottomNavigationBar: _buildBottomNavBar(context),
-      body: const SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: MyReceipt(),
-        ),
-      ),
-    );
-  }
-
-  // Simplified bottom nav bar - driver profile, details, message/call buttons
-  Widget _buildBottomNavBar(BuildContext context) {
-    return Container(
-      height: 80,
-      color: Theme.of(context).colorScheme.secondary,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Stack(
         children: [
-          // Driver profile and details
-          Row(
-            children: [
-              Icon(
-                Icons.person,
-                color: Theme.of(context).colorScheme.inversePrimary,
-                size: 28,
-              ),
-              const SizedBox(width: 8),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Aufa Dzaki",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                  Text(
-                    "Driver",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          const SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: MyReceipt(),
+            ),
           ),
-          // Message and call buttons
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.message, size: 24),
-                color: Theme.of(context).colorScheme.inversePrimary,
-                onPressed: () {},
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            bottom: _isExpanded ? 0 : -MediaQuery.of(context).size.height * 0.6 + 100,
+            left: 0,
+            right: 0,
+            height: MediaQuery.of(context).size.height * 0.6,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isExpanded = !_isExpanded;
+                });
+              },
+              child: Material(
+                elevation: 12,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                color: Theme.of(context).colorScheme.secondary,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 12),
+                    Container(
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.white54,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "Aufa Dzaki (Driver)",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: latestFoodName == null
+                            ? const Center(child: CircularProgressIndicator())
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Pesanan: $latestFoodName",
+                                      style: const TextStyle(
+                                          fontSize: 16, fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 4),
+                                  Text("Status: $latestStatus",
+                                      style: const TextStyle(fontSize: 14)),
+                                  const SizedBox(height: 16),
+                                  const Divider(),
+                                  Row(
+                                    children: [
+                                      const CircleAvatar(
+                                        radius: 24,
+                                        backgroundImage:
+                                            AssetImage('lib/images/driver.png'),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      const Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Aufa Dzaki",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold)),
+                                            Text("Driver Anda",
+                                                style: TextStyle(
+                                                    fontSize: 12, color: Colors.grey)),
+                                          ],
+                                        ),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.message),
+                                        onPressed: () {
+                                          // aksi kirim pesan
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.phone),
+                                        onPressed: () {
+                                          // aksi panggilan
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              IconButton(
-                icon: const Icon(Icons.call, size: 24),
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: () {},
-              ),
-            ],
+            ),
           ),
         ],
       ),
