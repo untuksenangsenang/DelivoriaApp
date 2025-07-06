@@ -5,34 +5,36 @@ class FirestoreService {
   final CollectionReference orders =
       FirebaseFirestore.instance.collection('orders');
 
-  // Save order with correct timestamp type (DateTime)
-  Future<void> saveOrderToDatabase(String receipt) async {
-    final user = FirebaseAuth.instance.currentUser;
+  /// Menyimpan order ke database dengan detail makanan dan struk
+  Future<void> saveOrderToDatabase({
+  required String receipt,
+  required String foodName,
+  required double totalPrice,
+}) async {
+  final user = FirebaseAuth.instance.currentUser;
 
-    if (user == null) {
-      print("Tidak ada user login");
-      return;
-    }
+  if (user == null) {
+    print("❌ Tidak ada user login");
+    return;
+  }
 
-    print("Simpan order untuk userId: ${user.uid}");
-
-    await orders.add({
+  try {
+    final orderData = {
       'userId': user.uid,
-      'order': receipt,
-      'foodName': "Classic Cheeseburger", 
       'status': 'paid',
-      'timestamp': FieldValue.serverTimestamp(), 
-    });
-  }
+      'timestamp': FieldValue.serverTimestamp(),
+      'receipt': receipt,
+      'food': {
+        'name': foodName,
+        'price': totalPrice,
+      }
+    };
 
-  // Optional: Update order status
-  Future<void> updateOrderStatus(String docId, String newStatus) async {
-    try {
-      await orders.doc(docId).update({
-        'status': newStatus,
-      });
-    } catch (e) {
-      print("Gagal update status: $e");
-    }
+    DocumentReference docRef = await orders.add(orderData);
+    print("✅ Order berhasil disimpan dengan ID: ${docRef.id}");
+  } catch (e) {
+    print("❌ Gagal menyimpan order: $e");
+    rethrow;
   }
+}
 }

@@ -356,4 +356,15 @@ class Restaurant extends ChangeNotifier {
     if (addons.isEmpty) return "No addons";
     return addons.map((addon) => "${addon.name} (\$${addon.price.toStringAsFixed(2)})").join(", ");
   }
+
+  // Hitung total harga (alias getTotalPrice)
+double calculateTotal() {
+  return getTotalPrice();
+}
+
+// Ambil nama makanan pertama dari keranjang
+String getFirstItemName() {
+  return _cart.isNotEmpty ? _cart.first.food.name : "Pesanan";
+}
+
 }

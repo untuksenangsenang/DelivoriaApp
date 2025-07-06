@@ -21,15 +21,22 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
   @override
   void initState() {
     super.initState();
+
     Future.delayed(Duration.zero, () {
-      final receipt = context.read<Restaurant>().displayCartReceipt();
-      final firstItem = context.read<Restaurant>().cart.isNotEmpty
-          ? context.read<Restaurant>().cart.first.food.name
+      final restaurant = context.read<Restaurant>();
+      final receipt = restaurant.displayCartReceipt();
+      final firstItemName = restaurant.cart.isNotEmpty
+          ? restaurant.cart.first.food.name
           : "Pesanan";
 
-      db.saveOrderToDatabase(receipt).then((_) {
+      // ✅ Perbaikan: Gunakan parameter sesuai definisi terbaru
+      db.saveOrderToDatabase(
+        receipt: receipt,
+        foodName: firstItemName,
+        totalPrice: restaurant.getTotalPrice(),
+      ).then((_) {
         setState(() {
-          latestFoodName = firstItem;
+          latestFoodName = firstItemName;
           latestStatus = "paid";
         });
       });
@@ -38,6 +45,8 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -45,9 +54,9 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: theme.colorScheme.surface,
       ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: theme.colorScheme.surface,
       body: Stack(
         children: [
           const SingleChildScrollView(
@@ -56,6 +65,8 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
               child: MyReceipt(),
             ),
           ),
+
+          // Panel pengemudi (Driver Panel)
           AnimatedPositioned(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
@@ -72,7 +83,7 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
               child: Material(
                 elevation: 12,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                color: Theme.of(context).colorScheme.secondary,
+                color: theme.colorScheme.secondary,
                 child: Column(
                   children: [
                     const SizedBox(height: 12),
@@ -90,6 +101,8 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
+
+                    // Informasi pesanan + kartu driver
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -98,48 +111,86 @@ class _DeliveryProgressPageState extends State<DeliveryProgressPage> {
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Pesanan: $latestFoodName",
-                                      style: const TextStyle(
-                                          fontSize: 16, fontWeight: FontWeight.bold)),
+                                  Text(
+                                    "Pesanan: $latestFoodName",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   const SizedBox(height: 4),
-                                  Text("Status: $latestStatus",
-                                      style: const TextStyle(fontSize: 14)),
+                                  Text(
+                                    "Status: $latestStatus",
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
                                   const SizedBox(height: 16),
                                   const Divider(),
-                                  Row(
-                                    children: [
-                                      const CircleAvatar(
-                                        radius: 24,
-                                        backgroundImage:
-                                            AssetImage('lib/images/driver.png'),
-                                      ),
-                                      const SizedBox(width: 12),
-                                      const Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Aufa Dzaki",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold)),
-                                            Text("Driver Anda",
-                                                style: TextStyle(
-                                                    fontSize: 12, color: Colors.grey)),
-                                          ],
+
+                                  // Driver Card UI
+                                  Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(16),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 10,
+                                          offset: Offset(0, 4),
                                         ),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.message),
-                                        onPressed: () {
-                                          // aksi kirim pesan
-                                        },
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.phone),
-                                        onPressed: () {
-                                          // aksi panggilan
-                                        },
-                                      ),
-                                    ],
+                                      ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: Colors.teal.shade700,
+                                          child: const Text(
+                                            "AD",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        const Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Aufa Dzaki",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              SizedBox(height: 4),
+                                              Text(
+                                                "Driver Anda",
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.message, color: Colors.teal),
+                                          onPressed: () {
+                                            // aksi kirim pesan
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.phone, color: Colors.teal),
+                                          onPressed: () {
+                                            // aksi panggilan
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
