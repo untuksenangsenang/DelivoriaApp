@@ -62,10 +62,10 @@ void register() async {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // logo
-            Icon(
-              Icons.lock_open_rounded,
-              size: 100,
-              color: Theme.of(context).colorScheme.inversePrimary,
+            Image.asset(
+              "lib/images/logo/delivoria.png",
+              width: 180,
+              height: 180,
             ),
 
             const SizedBox(height: 25),
@@ -90,7 +90,7 @@ void register() async {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Color.fromARGB(255, 0, 0, 0), // Use a neutral color for the border
                     width: 1.0,
                   ),
                 ),
@@ -115,7 +115,7 @@ void register() async {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Color.fromARGB(255, 0, 0, 0),
                     width: 1.0,
                   ),
                 ),
@@ -140,7 +140,7 @@ void register() async {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Color.fromARGB(255, 0, 0, 0),
                     width: 1.0,
                   ),
                 ),

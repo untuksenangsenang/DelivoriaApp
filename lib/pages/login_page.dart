@@ -47,21 +47,10 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // logo
-            Icon(
-              Icons.lock_open_rounded,
-              size: 100,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-
-            const SizedBox(height: 25),
-
-            // message app slogan
-            Text(
-              "Food Delivery App",
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).colorScheme.inversePrimary,
-              ),
+            Image.asset(
+              "lib/images/logo/delivoria.png",
+              width: 180,
+              height: 180,
             ),
 
             const SizedBox(height: 25),
@@ -74,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Color.fromARGB(255, 0, 0, 0),
                     width: 1.0,
                   ),
                 ),
@@ -99,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Color.fromARGB(255, 0, 0, 0),
                     width: 1.0,
                   ),
                 ),
